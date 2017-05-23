@@ -8,9 +8,6 @@ import java.util.Properties;
 
 import org.apache.http.HttpVersion;
 import org.apache.http.client.fluent.Request;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -44,22 +41,13 @@ public class PassingUnitTests {
 		}
 	}
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	/**
 	 * Calls https://chpl.ahrqstg.org/rest/status to make sure that the CHPL API is available.
 	 * No API Key is required.
-	 * Expected response is {"status":"OK"}
+	 * Expected response is 
+	 * 	{
+	  		"status":"OK"
+	  	}
 	 */
 	@Test
 	public void testChplStatusIsOk() {
@@ -89,10 +77,47 @@ public class PassingUnitTests {
 	
 	/**
 	 * Calls https://chpl.ahrqstg.org/rest/data/certification_editions 
+	 * without the required API Key. 
+	 * Expected response is 
+	 * 	{
+  			"error" : "API key must be presented in order to use this API"
+		}
+	 * 
+	 */
+	@Test
+	public void testCertificationEditionsApi_RequiresApiKey() {
+		String url = properties.getProperty(CHPL_API_URL_BEGIN_PROPERTY) +
+				properties.getProperty("certificationEditionsApi");
+		System.out.println("Making HTTP GET call to " + url);
+		
+		JsonObject response = null;
+		try{
+			String jsonResponse = Request.Get(url)
+					.version(HttpVersion.HTTP_1_1)
+					.execute().returnContent().asString();
+			response = new Gson().fromJson(jsonResponse, JsonObject.class);
+		} catch (IOException e){
+			System.err.println("Failed to make call to " + url);
+			System.err.println("Please check that the " + CHPL_API_URL_BEGIN_PROPERTY + 
+					" and certificationEditionsApi properties are configured correctly in " +
+					PROPERTIES_FILE_NAME);
+		}
+		assertNotNull(response);
+		assertTrue(response.has("error"));
+		assertEquals("API key must be presented in order to use this API", response.get("error").getAsString());
+	}
+	
+	/**
+	 * Calls https://chpl.ahrqstg.org/rest/data/certification_editions 
 	 * to get the available certification editions in the system. A certification edition
 	 * is a year for which a listing on the CHPL is certified.
 	 * An API Key is required.
-	 * Expected response is [{"id":3,"name":"2015","description":null},{"id":2,"name":"2014","description":null},{"id":1,"name":"2011","description":null}]
+	 * Expected response is 
+	 * 	[
+	  		{"id":3,"name":"2015","description":null},
+	  		{"id":2,"name":"2014","description":null},
+	  		{"id":1,"name":"2011","description":null}
+	  	]
 	 */
 	@Test
 	public void testCertificationEditionsApi() {
@@ -139,5 +164,4 @@ public class PassingUnitTests {
 			}
 		}
 	}
-
 }
