@@ -1,20 +1,49 @@
-## Prerequisites
+## Register for an API Key
 
+For this project, you will be calling CHPL's RESTful API. You will be using our Staging system and you will need to register to use the API. Complete the registration form on the [CHPL API Registration Page](https://chpl.ahrqstg.org/#/resources/chpl_api) and make sure to hang on to your API Key.
+
+## Instructions for Automated Test Engineers
+
+We would like you to write 3-5 automated tests that can run against the CHPL's RESTful API. API documentation can be found [here](https://chpl.ahrqstg.org/#/resources/chpl_api)
+
+Please use whatever tool you are most comfortable with! We have provided a couple of samples in this Github project to help you get started. The sample unit tests are written in Java and you can find them in the file
+>
+	interview-test-app/src/test/java/com/ainq/chpl/PassingUnitTests.java
+
+You should expect all of the sample tests to pass. If you would like to run the samples, you'll need to follow the [Instructions for Java Developers](#developerInstructions) below to install required software on your machine, check out the code, and use your API Key.
+
+You may write automated testing code to test the same API methods as the samples or use the API documentation to find additional methods to test. Some good candidates for testing are any of the /data/* methods or /search. You will not be able to test methods that require username and password authentication although a nice test might be to confirm that an unauthenticated user cannot access one of these protected methods. 
+
+Be prepared to discuss your solution.
+
+## <a name="developerInstructions"></a>Instructions for Java Developers
+
+#### Prerequisites
 * Git and an account on Github
 * Java 1.8
 * Maven (3.3+ recommended)
 
-## Instructions
-
+#### Check out the code
 Fork this git project into your own Github account. Clone the forked copy to your development machine.
 
-For this project, you will be calling CHPL's RESTful API. You will be using our Staging system and you will need to register to use our API. Complete the registration here and make sure to hang on to your API Key: https://chpl.ahrqstg.org/#/resources/chpl_api .
+#### Insert your API Key
+Put your API Key into two files: 
 
-Put your API Key into the file src/test/resources/environment.properties. There is already a placeholder for it:
+>
+	src/main/resources/environment.properties
+	src/test/resources/environment.properties 
 
-> apiKey=yourApiKeyHere
+There is already a placeholder for it in each file:
+> 
+	apiKey=yourApiKeyHere
 
-In the com.ainq.chpl package under src/test/java, you will find several unit tests written in Java. These tests are written against CHPL's RESTful API and you should expect them all to pass. API documentation is available on the page where you signed up for the API Key. Please write 3-5 additional unit tests which pass in a tool of your choice. You may test the same API methods as the samples or use the API documentation to find additional methods to test. You will not be able to test methods that require username and password authentication (other than that an unauthenticated user cannot access them), but other good candidates for testing are any of the /data/* methods or /search.
+#### Write Some Code!
 
-Commit and push code for your additional tests to your Github account. Be prepared to walk us through your solution!
+Several failing unit tests can be found in the file
+>
+	interview-test-app/src/test/java/com/ainq/chpl/FailingUnitTests.java
+	
+You'll need to update ChplApiWrapper.java in such a way that all of the failing unit tests pass. Comments are included in the code. Feel free to add other unit tests or make any changes you feel would improve this code.
+
+Commit and push whatever code you've written to your Github fork of this project. Be prepared to discuss your solution. What design pattern did you see being used in the ChplApiWrapper? 
 
