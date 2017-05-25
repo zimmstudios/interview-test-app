@@ -8,7 +8,7 @@ We would like you to write 3-5 automated tests that can run against the CHPL's R
 
 Please use whatever tool you are most comfortable with! We have provided a couple of samples in this Github project to help you get started. The sample unit tests are written in Java and you can find them in the file
 >
-	interview-test-app/src/test/java/com/ainq/chpl/PassingUnitTests.java
+	src/test/java/com/ainq/chpl/PassingUnitTests.java
 
 You should expect all of the sample tests to pass. If you would like to run the samples, you'll need to follow the [Instructions for Java Developers](#developerInstructions) below to install required software on your machine, check out the code, and use your API Key.
 
@@ -27,23 +27,22 @@ Be prepared to discuss your solution.
 Fork this git project into your own Github account. Clone the forked copy to your development machine.
 
 #### Insert your API Key
-Put your API Key into two files: 
+Put your API Key into the necessary properties file: 
 
 >
-	src/main/resources/environment.properties
 	src/test/resources/environment.properties 
 
-There is already a placeholder for it in each file:
+There is already a placeholder for it:
 > 
 	apiKey=yourApiKeyHere
 
 #### Write Some Code!
 
-Several failing unit tests can be found in the file
+A few of our unit tests have found bugs or incomplete code and are failing. You can see the tests in the file:
 >
-	interview-test-app/src/test/java/com/ainq/chpl/FailingUnitTests.java
+	src/test/java/com/ainq/chpl/FailingUnitTests.java
 	
-You'll need to update ChplApiWrapper.java in such a way that all of the failing unit tests pass. Comments are included in the code. Feel free to add other unit tests or make any changes you feel would improve this code.
+You'll need to update ChplApiWrapper.java in such a way that all of the failing unit tests pass. The existing failing unit tests *should not* need to be changed, and they should all pass once your ChplApiWrapper updates are complete. Feel free to add other unit tests or make any changes you feel would improve this code.
 
 Commit and push whatever code you've written to your Github fork of this project. Be prepared to discuss your solution. What design pattern did you see being used in the ChplApiWrapper? 
 
