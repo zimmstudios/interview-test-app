@@ -36,7 +36,7 @@ There is already a placeholder for it:
 > 
 	apiKey=yourApiKeyHere
 
-### Run the Tests
+#### Run the Tests
 
 From the command line, you should be able to run the unit tests (some passing and some failing) with 
 >
