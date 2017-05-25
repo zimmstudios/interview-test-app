@@ -11,12 +11,24 @@
     <resources>
       <resource>
         <directory>src/main/java</directory>
+        <includes>
+          <include>**/*.java</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**/*.java</include>
+        </includes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
       </resource>
       <resource>
-        <directory>src/main/resources</directory>
+        <directory>src/test/resources</directory>
         <excludes>
           <exclude>**/*.java</exclude>
         </excludes>
@@ -38,42 +50,14 @@
         </configuration>
       </plugin>
       <plugin>
-        <artifactId>maven-acr-plugin</artifactId>
-        <version>1.1</version>
-        <extensions>true</extensions>
-        <configuration>
-          <archive>
-            <manifestEntries>
-              <Main-Class>ChplApplication</Main-Class>
-            </manifestEntries>
-          </archive>
-        </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
-      </plugin>
-      <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-        <manifest>
-          <mainClass>ChplApplication</mainClass>
-        </manifest>
-      </archive>
-        </configuration>
       </plugin>
     </plugins>
   </build>
@@ -93,16 +77,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.8.1</version>
-		</dependency>
-		<dependency>
-		   	<groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-api</artifactId>
-		    <version>2.7</version>
-  		</dependency>
-		<dependency>
-		    <groupId>org.apache.logging.log4j</groupId>
-		    <artifactId>log4j-core</artifactId>
-		    <version>2.7</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

@@ -36,13 +36,21 @@ There is already a placeholder for it:
 > 
 	apiKey=yourApiKeyHere
 
+### Run the Tests
+
+From the command line, you should be able to run the unit tests (some passing and some failing) with 
+>
+	mvn test
+	
+Using the command line is not required. You may also run them within your favorite IDE. 
+
 #### Write Some Code!
 
-A few of our unit tests have found bugs or incomplete code and are failing. You can see the tests in the file:
+A few of our unit tests have found bugs or incomplete code and are failing. You can see those tests in the file:
 >
 	src/test/java/com/ainq/chpl/FailingUnitTests.java
 	
 You'll need to update ChplApiWrapper.java in such a way that all of the failing unit tests pass. The existing failing unit tests *should not* need to be changed, and they should all pass once your ChplApiWrapper updates are complete. Feel free to add other unit tests or make any changes you feel would improve this code.
 
-Commit and push whatever code you've written to your Github fork of this project. Be prepared to discuss your solution. What design pattern did you see being used in the ChplApiWrapper? 
+Commit and push whatever code you've written to your Github fork of this project. Be prepared to discuss your solution. Did you notice the use of a design pattern in ChplApiWrapper?
 
