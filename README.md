@@ -4,7 +4,7 @@ For this project, you will be calling CHPL's RESTful API. You will be using our 
 
 ## Instructions for Automated Test Engineers
 
-We would like you to write 3-5 automated tests that can run against the CHPL's RESTful API. API documentation can be found [here](https://chpl.ahrqstg.org/#/resources/chpl_api)
+We would like you to write 3-5 tests that can run in an automated way against the CHPL's RESTful API. API documentation can be found [here](https://chpl.ahrqstg.org/#/resources/chpl_api)
 
 Please use whatever tool you are most comfortable with! We have provided a couple of samples in this Github project to help you get started. The sample unit tests are written in Java and you can find them in the file
 >
