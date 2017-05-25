@@ -23,7 +23,7 @@ public class ChplApiWrapper {
 		//load environment.properties file
 		properties = new Properties();
 		try {
-			final InputStream in = PassingUnitTests.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
+			final InputStream in = ChplApiWrapper.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE_NAME);
 			properties.load(in);
 			in.close();
 			System.out.println("Loaded " + properties.size() + " properties from file " + PROPERTIES_FILE_NAME);
