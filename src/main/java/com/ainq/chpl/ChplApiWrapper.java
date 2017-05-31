@@ -11,7 +11,10 @@ import org.apache.http.client.fluent.Request;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import java.util.Collections;
+import java.util.Iterator;
 
 public class ChplApiWrapper {
 	private static final String PROPERTIES_FILE_NAME = "environment.properties";
@@ -68,8 +71,13 @@ public class ChplApiWrapper {
 					" and statusApi properties are configured correctly in " +
 					PROPERTIES_FILE_NAME);
 		}
-		System.out.println("Response from " + url + ": \n\t" + response.toString());
-		return response.toString();
+		if (response == null) {
+                    System.out.println("Response from " + url + "was null.");
+                    return null;
+                } else {
+                    System.out.println("Response from " + url + ": \n\t" + response.toString());
+                    return response.getAsJsonPrimitive("status").getAsString();
+                }
 	}
 	
 	
@@ -114,18 +122,56 @@ public class ChplApiWrapper {
 	 * @return A sorted list of education types.
 	 */
 	public List<String> getSortedEducationLevelNames() {
-		//TODO: Implement this method!
-		return new ArrayList<String>();
+		List<String> educationLevelNames = getEducationLevelNames();
+                
+                Collections.sort(educationLevelNames);
+                
+                return educationLevelNames;
 	}
 	
 	/**
 	 * This method should call https://chpl.ahrqstg.org/rest/data/practice_types
 	 * and parse the "name" field from each element to get a list of
 	 * practice type names.
-	 * @return A list of practice type names.
+	 * @return A list of practice type names or an empty list if there was
+         *         no response from the CHPL API.
 	 */
 	public List<String> getPracticeTypeNames() {
-		//TODO: implement this mehtod!
-		return new ArrayList<String>();
+		String url = properties.getProperty(CHPL_API_URL_BEGIN_PROPERTY) +
+				properties.getProperty("practiceTypesApi");
+		System.out.println("Making HTTP GET call to " + url +
+				" with API Key " + properties.getProperty("apiKey"));
+                
+                JsonArray response = null;
+		try {
+			String jsonResponse = Request.Get(url)
+					.version(HttpVersion.HTTP_1_1)
+					.addHeader("API-Key", properties.getProperty("apiKey"))
+					.execute().returnContent().asString();
+                        
+			response = new Gson().fromJson(jsonResponse, JsonArray.class);
+		} catch (IOException e){
+			System.err.println("Failed to make call to " + url);
+			System.err.println("Please check that the " + CHPL_API_URL_BEGIN_PROPERTY +
+					" and practiceTypesApi properties are configured correctly in " +
+					PROPERTIES_FILE_NAME);
+                        System.err.println(e);
+		}
+                
+                List<String> practiceTypeNameList = new ArrayList<>();
+                
+                if (response == null) {
+                    System.out.println("Response from " + url + "was null.");
+                } else {
+                    System.out.println("Response from " + url + ": \n\t" + response.toString());
+                    
+                    Iterator<JsonElement> iterator = response.iterator();
+                    while (iterator.hasNext()) {
+                        JsonObject jsonPracticeType = iterator.next().getAsJsonObject();
+                        practiceTypeNameList.add(jsonPracticeType.getAsJsonPrimitive("name").getAsString());
+                    }
+                }
+                
+		return practiceTypeNameList;
 	}
 }
